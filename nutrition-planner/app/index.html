@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>60-Day Cut · Nutrition Plan</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-title">NUTRITION PLAN</div>
+    <div class="header-goal">192 → 177 lbs · 60 days · MBF</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('dashboard', this)">📊 Dashboard</button>
+    <button class="tab" onclick="switchTab('meals', this)">🗓 5-Day Plan</button>
+    <button class="tab" onclick="switchTab('reference', this)">🥗 Reference</button>
+    <button class="tab" onclick="switchTab('recipes', this)">🍳 Recipes</button>
+    <button class="tab" onclick="switchTab('editor', this)">📝 Edit CLAUDE.md</button>
+  </div>
+
+  <div class="content">
+
+    <!-- ── DASHBOARD ─────────────────────────────────────── -->
+    <div id="panel-dashboard" class="panel active">
+
+      <div class="day-display">
+        <div class="day-num" id="prog-day-num">—</div>
+        <div class="day-lbl">Program Day</div>
+        <div class="day-sub" id="prog-day-sub">Set your start date below</div>
+      </div>
+
+      <div class="goal-banner">
+        <div class="goal-row">
+          <div>
+            <div class="goal-w" id="disp-start">192 lbs</div>
+            <div class="goal-sub">starting weight</div>
+          </div>
+          <div class="goal-arr">→</div>
+          <div style="text-align:right">
+            <div class="goal-w t">177 lbs</div>
+            <div class="goal-sub">target · −15 lbs</div>
+          </div>
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-bar" id="prog-bar" style="width:0%"></div>
+        </div>
+        <div class="prog-lbls">
+          <span id="prog-l">Day 0</span>
+          <span>Day 60</span>
+        </div>
+      </div>
+
+      <div class="macro-grid">
+        <div class="macro-cell">
+          <div class="macro-val">1,800</div>
+          <div class="macro-unit">cal/day</div>
+          <div class="macro-lbl">CALORIES</div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-val">~180g</div>
+          <div class="macro-unit">protein</div>
+          <div class="macro-lbl">PRIORITY</div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-val">~55g</div>
+          <div class="macro-unit">fat</div>
+          <div class="macro-lbl">HEALTHY</div>
+        </div>
+        <div class="macro-cell">
+          <div class="macro-val">~135g</div>
+          <div class="macro-unit">carbs</div>
+          <div class="macro-lbl">AM ONLY</div>
+        </div>
+      </div>
+
+      <div id="today-badge"></div>
+
+      <div class="slabel">Today's Meal Schedule</div>
+      <div class="card" id="today-meals"></div>
+
+      <div class="slabel">Program Settings</div>
+      <div class="card">
+        <div class="stats-grid">
+          <div class="stat-field">
+            <label>Start Date</label>
+            <input type="date" id="s-start" onchange="saveSettings()">
+          </div>
+          <div class="stat-field">
+            <label>Current Weight (lbs)</label>
+            <input type="number" id="s-weight" placeholder="192" step="0.1" onchange="saveSettings()">
+          </div>
+          <div class="stat-field">
+            <label>Day Override (optional)</label>
+            <input type="number" id="s-day-override" placeholder="Auto-calculated" min="1" max="60" onchange="saveSettings()">
+          </div>
+          <div class="stat-field">
+            <label>Water Today (oz)</label>
+            <input type="number" id="s-water" placeholder="0" max="200" onchange="saveSettings()">
+          </div>
+        </div>
+      </div>
+
+      <div class="slabel">Weight Log</div>
+      <div class="card">
+        <div class="stats-grid" style="margin-bottom:10px">
+          <div class="stat-field">
+            <label>Date</label>
+            <input type="date" id="log-date">
+          </div>
+          <div class="stat-field">
+            <label>Weight (lbs)</label>
+            <input type="number" id="log-w" placeholder="192.0" step="0.1">
+          </div>
+        </div>
+        <button class="btn primary" onclick="addWeightLog()" style="margin-bottom:12px;width:100%">+ Log Weight</button>
+        <div id="wlog-list" class="wlog-empty">No entries yet.</div>
+      </div>
+
+    </div>
+
+    <!-- ── 5-DAY MEALS ────────────────────────────────────── -->
+    <div id="panel-meals" class="panel">
+
+      <div class="info-box green">
+        Rotate Days 1–5, then repeat. Post-workout shake is the same every day. Tap any day to expand.
+      </div>
+
+      <div class="day-card">
+        <div class="day-hdr" onclick="toggleDay(this)">
+          <div class="day-title">Day 1 — Salmon + Shrimp</div>
+          <div class="day-sum">
+            <span class="day-p-badge">184g P</span>
+            <span class="day-cal-txt">1,742 cal</span>
+            <span class="day-toggle">▼</span>
+          </div>
+        </div>
+        <div class="day-body">
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:45 AM · POST-WORKOUT</div><div class="dm-name">Vegan Protein Shake</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">160 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">8:00 AM · BREAKFAST</div><div class="dm-name">Simple Breakfast — 3 Eggs</div><div class="dm-mod">Use 3 eggs instead of 2. Avocado + tomato + sprouted grain toast.</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">430 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">12:30 PM · LUNCH</div><div class="dm-name">Shrimp over Squash + Carrot Noodles</div></div><div class="dm-right"><div class="dm-p">53g</div><div class="dm-cal">409 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:00 PM · SNACK</div><div class="dm-name">Tuna Salad</div></div><div class="dm-right"><div class="dm-p">33g</div><div class="dm-cal">328 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">7:00 PM · DINNER</div><div class="dm-name">Poached Salmon + Vegetables</div></div><div class="dm-right"><div class="dm-p">38g</div><div class="dm-cal">415 cal</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-hdr" onclick="toggleDay(this)">
+          <div class="day-title">Day 2 — Tofu + Shrimp</div>
+          <div class="day-sum"><span class="day-p-badge">171g P</span><span class="day-cal-txt">1,783 cal</span><span class="day-toggle">▼</span></div>
+        </div>
+        <div class="day-body">
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:45 AM · POST-WORKOUT</div><div class="dm-name">Vegan Protein Shake</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">160 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">8:00 AM · BREAKFAST</div><div class="dm-name">Mexican Tofu Scramble</div><div class="dm-mod">Add 2 egg whites scrambled in. +7g protein, +34 cal.</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">450 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">12:30 PM · LUNCH</div><div class="dm-name">Shrimp + Avocado Lettuce Wraps</div></div><div class="dm-right"><div class="dm-p">42g</div><div class="dm-cal">401 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:00 PM · SNACK</div><div class="dm-name">Shrimp Cocktail</div></div><div class="dm-right"><div class="dm-p">33g</div><div class="dm-cal">295 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">7:00 PM · DINNER</div><div class="dm-name">Sweet Potato Tofu Scramble</div><div class="dm-mod">Add 3 egg whites to the pan during cooking.</div></div><div class="dm-right"><div class="dm-p">36g</div><div class="dm-cal">477 cal</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-hdr" onclick="toggleDay(this)">
+          <div class="day-title">Day 3 — Tuna Focus</div>
+          <div class="day-sum"><span class="day-p-badge">172g P</span><span class="day-cal-txt">1,706 cal</span><span class="day-toggle">▼</span></div>
+        </div>
+        <div class="day-body">
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:45 AM · POST-WORKOUT</div><div class="dm-name">Vegan Protein Shake</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">160 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">8:00 AM · BREAKFAST</div><div class="dm-name">Breakfast Salad — No Bacon</div><div class="dm-mod">Skip turkey bacon. Use 3 eggs. Extra tbsp sunflower seeds.</div></div><div class="dm-right"><div class="dm-p">27g</div><div class="dm-cal">380 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">12:30 PM · LUNCH</div><div class="dm-name">Mediterranean Tuna Salad</div><div class="dm-mod">Add 2oz extra canned tuna. Same dressing, same bowl.</div></div><div class="dm-right"><div class="dm-p">38g</div><div class="dm-cal">455 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:00 PM · SNACK</div><div class="dm-name">Shrimp Cocktail</div></div><div class="dm-right"><div class="dm-p">33g</div><div class="dm-cal">295 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">7:00 PM · DINNER</div><div class="dm-name">Shrimp + Avocado Lettuce Wraps</div></div><div class="dm-right"><div class="dm-p">42g</div><div class="dm-cal">401 cal</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-hdr" onclick="toggleDay(this)">
+          <div class="day-title">Day 4 — Shrimp Bowl</div>
+          <div class="day-sum"><span class="day-p-badge">180g P</span><span class="day-cal-txt">1,767 cal</span><span class="day-toggle">▼</span></div>
+        </div>
+        <div class="day-body">
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:45 AM · POST-WORKOUT</div><div class="dm-name">Vegan Protein Shake</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">160 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">8:00 AM · BREAKFAST</div><div class="dm-name">Pumpkin Pancakes + 2 Boiled Eggs</div><div class="dm-mod">4 pancakes only (2/3 recipe). 2 hard-boiled eggs on side. No syrup.</div></div><div class="dm-right"><div class="dm-p">28g</div><div class="dm-cal">400 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">12:30 PM · LUNCH</div><div class="dm-name">Shrimp over Squash + Carrot Noodles</div></div><div class="dm-right"><div class="dm-p">53g</div><div class="dm-cal">409 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:00 PM · SNACK</div><div class="dm-name">Tuna Salad</div></div><div class="dm-right"><div class="dm-p">33g</div><div class="dm-cal">328 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">7:00 PM · DINNER</div><div class="dm-name">Vegan Buddha Bowl + Shrimp</div><div class="dm-mod">Add 5oz cooked shrimp. Reduce chickpeas by 1/2 can.</div></div><div class="dm-right"><div class="dm-p">37g</div><div class="dm-cal">470 cal</div></div></div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-hdr" onclick="toggleDay(this)">
+          <div class="day-title">Day 5 — Grain Porridge + Salmon</div>
+          <div class="day-sum"><span class="day-p-badge">173g P</span><span class="day-cal-txt">1,714 cal</span><span class="day-toggle">▼</span></div>
+        </div>
+        <div class="day-body">
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:45 AM · POST-WORKOUT</div><div class="dm-name">Vegan Protein Shake</div></div><div class="dm-right"><div class="dm-p">30g</div><div class="dm-cal">160 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">8:00 AM · BREAKFAST</div><div class="dm-name">Fruity Grain Porridge — Boosted</div><div class="dm-mod">Add 3 tbsp hemp seeds + 1/2 scoop vegan protein. Reduce walnuts to 1 tbsp.</div></div><div class="dm-right"><div class="dm-p">33g</div><div class="dm-cal">415 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">12:30 PM · LUNCH</div><div class="dm-name">Shrimp + Avocado Lettuce Wraps</div></div><div class="dm-right"><div class="dm-p">42g</div><div class="dm-cal">401 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">4:00 PM · SNACK</div><div class="dm-name">Tuna Salad</div></div><div class="dm-right"><div class="dm-p">33g</div><div class="dm-cal">328 cal</div></div></div>
+          <div class="day-meal"><div class="dm-left"><div class="dm-time">7:00 PM · DINNER</div><div class="dm-name">Poached Salmon + Vegetables</div></div><div class="dm-right"><div class="dm-p">38g</div><div class="dm-cal">415 cal</div></div></div>
+        </div>
+      </div>
+
+      <div class="slabel">Protein Boosters — When Under Target</div>
+      <div class="card">
+        <table class="boost-tbl">
+          <thead>
+            <tr><th>Add this</th><th>Protein</th><th style="text-align:right">Calories</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>2 egg whites</td><td class="pv">+7g</td><td class="cv">+34</td></tr>
+            <tr><td>1oz extra canned tuna</td><td class="pv">+7g</td><td class="cv">+30</td></tr>
+            <tr><td>3oz extra cooked shrimp</td><td class="pv">+18g</td><td class="cv">+85</td></tr>
+            <tr><td>1/2 cup edamame</td><td class="pv">+9g</td><td class="cv">+95</td></tr>
+            <tr><td>2 tbsp hemp seeds</td><td class="pv">+6g</td><td class="cv">+110</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- ── REFERENCE ──────────────────────────────────────── -->
+    <div id="panel-reference" class="panel">
+
+      <div class="slabel">Top Protein Sources</div>
+      <div class="food-grid">
+        <div class="food-item"><div class="food-icon">🦐</div><div class="food-name">Shrimp</div><div class="food-note">53g P per recipe. Best protein density in this plan.</div></div>
+        <div class="food-item"><div class="food-icon">🐟</div><div class="food-name">Wild Salmon</div><div class="food-note">38g P/6oz fillet. EPA+DHA omega-3s. Eat 2–3x/week.</div></div>
+        <div class="food-item"><div class="food-icon">🐟</div><div class="food-name">Canned Tuna</div><div class="food-note">33g P per 5oz can. Always keep 5 cans stocked.</div></div>
+        <div class="food-item"><div class="food-icon">🥚</div><div class="food-name">Eggs + Whites</div><div class="food-note">6g whole egg. 3.5g per egg white at 17 cal.</div></div>
+        <div class="food-item"><div class="food-icon">🌱</div><div class="food-name">Firm Tofu</div><div class="food-note">Best paired with egg whites at breakfast.</div></div>
+        <div class="food-item"><div class="food-icon">🫘</div><div class="food-name">Lentils</div><div class="food-note">17g P + 22g fiber. Best plant protein/fiber ratio.</div></div>
+        <div class="food-item"><div class="food-icon">🫘</div><div class="food-name">Chickpeas</div><div class="food-note">~15g P per can. Use in bowls.</div></div>
+        <div class="food-item"><div class="food-icon">🌿</div><div class="food-name">Hemp Seeds</div><div class="food-note">6g P per 2 tbsp. Stir into anything.</div></div>
+      </div>
+
+      <div class="slabel">Best Fats + Omega-3s</div>
+      <div class="food-grid">
+        <div class="food-item"><div class="food-icon">🥑</div><div class="food-name">Avocado</div><div class="food-note">Monounsaturated fat + fiber. 1/2 per meal max.</div></div>
+        <div class="food-item"><div class="food-icon">🫒</div><div class="food-name">Extra-Virgin Olive Oil</div><div class="food-note">Primary cooking fat. Anti-inflammatory.</div></div>
+        <div class="food-item"><div class="food-icon">🌱</div><div class="food-name">Chia Seeds (ALA)</div><div class="food-note">Omega-3 + calcium. Add to shakes/porridge.</div></div>
+        <div class="food-item"><div class="food-icon">🌱</div><div class="food-name">Flaxseeds (ALA)</div><div class="food-note">Grind before using for absorption.</div></div>
+        <div class="food-item"><div class="food-icon">🌿</div><div class="food-name">Hemp Seeds (ALA)</div><div class="food-note">Best omega-6:3 ratio of any seed.</div></div>
+        <div class="food-item"><div class="food-icon">🌰</div><div class="food-name">Walnuts (ALA)</div><div class="food-note">Best nut for omega-3s. 1 tbsp in porridge.</div></div>
+      </div>
+
+      <div class="slabel">Smart Carbs — Morning + Lunch Only</div>
+      <div class="info-box amber">No grains or bread after 5pm. Fish and vegetables only at dinner.</div>
+      <div class="food-grid">
+        <div class="food-item"><div class="food-icon">🍠</div><div class="food-name">Sweet Potato</div><div class="food-note">Best post-workout carb. Slow-burning.</div></div>
+        <div class="food-item"><div class="food-icon">🌾</div><div class="food-name">Quinoa</div><div class="food-note">Protein + carb combo. Complete amino profile.</div></div>
+        <div class="food-item"><div class="food-icon">🥣</div><div class="food-name">Rolled Oats</div><div class="food-note">Breakfast only. Steady energy, no crash.</div></div>
+        <div class="food-item"><div class="food-icon">🌾</div><div class="food-name">Brown Rice</div><div class="food-note">Lunch grain base for fish dishes.</div></div>
+        <div class="food-item"><div class="food-icon">🥙</div><div class="food-name">Sprouted Grain Bread</div><div class="food-note">More protein than regular. Breakfast only.</div></div>
+        <div class="food-item"><div class="food-icon">🫘</div><div class="food-name">Lentils</div><div class="food-note">Dual protein + complex carb. Very filling.</div></div>
+      </div>
+
+      <div class="slabel">6 Rules for Muscle Preservation</div>
+      <div class="rule-item"><div class="rule-icon">🐟</div><div><div class="rule-title">Shrimp or Fish at Every Lunch</div><div class="rule-desc">Shrimp over squash noodles = 53g protein in one meal. Make it your default.</div></div></div>
+      <div class="rule-item"><div class="rule-icon">🥚</div><div><div class="rule-title">Egg Whites Are Your Protein Hack</div><div class="rule-desc">2 egg whites = 7g protein, 34 cal, near-zero fat. Add to any scramble, any meal.</div></div></div>
+      <div class="rule-item"><div class="rule-icon">🌊</div><div><div class="rule-title">Salmon Twice a Week Minimum</div><div class="rule-desc">EPA + DHA omega-3s reduce MBF inflammation and speed recovery between sessions.</div></div></div>
+      <div class="rule-item"><div class="rule-icon">🚫</div><div><div class="rule-title">No Grains or Bread at Dinner</div><div class="rule-desc">Fish and vegetables only. Carbs at night get stored, not burned.</div></div></div>
+      <div class="rule-item"><div class="rule-icon">💧</div><div><div class="rule-title">96 oz Water Daily</div><div class="rule-desc">192 ÷ 2 = 96 oz. Start with 16 oz the moment you wake at 4am.</div></div></div>
+      <div class="rule-item"><div class="rule-icon">⏰</div><div><div class="rule-title">Protein Every 3–4 Hours</div><div class="rule-desc">5 meals spaced 3–4 hours apart keeps muscle protein synthesis elevated all day.</div></div></div>
+
+    </div>
+
+    <!-- ── RECIPES ──────────────────────────────────────────── -->
+    <div id="panel-recipes" class="panel">
+
+      <div class="info-box green">
+        Tap any recipe to expand ingredients and step-by-step instructions.
+      </div>
+
+      <div class="recipe-filter-bar">
+        <button class="recipe-filter-btn active" onclick="filterRecipes('all', this)">All</button>
+        <button class="recipe-filter-btn" onclick="filterRecipes('breakfast', this)">Breakfast</button>
+        <button class="recipe-filter-btn" onclick="filterRecipes('lunch', this)">Lunch</button>
+        <button class="recipe-filter-btn" onclick="filterRecipes('dinner', this)">Dinner</button>
+        <button class="recipe-filter-btn" onclick="filterRecipes('snack', this)">Snack</button>
+      </div>
+
+      <div id="recipe-list"></div>
+
+    </div>
+
+    <!-- ── EDITOR ─────────────────────────────────────────── -->
+    <div id="panel-editor" class="panel">
+
+      <div class="info-box green">
+        Edit your CLAUDE.md below. Changes auto-save in this browser. Download the updated file and re-upload to your Claude project to keep Claude current.
+      </div>
+
+      <div class="quick-stats">
+        <div class="quick-stats-title">Quick Update Fields</div>
+        <div class="stats-grid">
+          <div class="stat-field">
+            <label>Current Weight (lbs)</label>
+            <input type="number" id="qf-weight" placeholder="192" step="0.1">
+          </div>
+          <div class="stat-field">
+            <label>Days Into Program</label>
+            <input type="number" id="qf-day" placeholder="e.g. 14" min="1" max="60">
+          </div>
+          <div class="stat-field full">
+            <label>Note to Append to CLAUDE.md</label>
+            <input type="text" id="qf-notes" placeholder="e.g. switched Day 2 snack to tuna salad">
+          </div>
+        </div>
+        <button class="btn primary apply-btn" onclick="applyQuickUpdate()">Apply Updates to CLAUDE.md</button>
+      </div>
+
+      <div class="editor-toolbar">
+        <button class="btn primary" onclick="downloadMd()">⬇ Download CLAUDE.md</button>
+        <button class="btn" onclick="copyMd()">⎘ Copy</button>
+        <button class="btn danger" onclick="resetMd()">↺ Reset</button>
+        <span class="save-status saved" id="save-status">✓ Auto-saved</span>
+      </div>
+
+      <textarea class="editor-area" id="claude-editor" spellcheck="false" oninput="onEditorInput()"></textarea>
+
+    </div>
+
+  </div><!-- .content -->
+</div><!-- .app -->
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,880 @@
+/* ── Reset & Variables ────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Core backgrounds */
+  --bg:          #ffffff;
+  --surface:     #f8faf8;
+  --card:        #ffffff;
+
+  /* Borders */
+  --border:      #e0ece0;
+  --border2:     #c8dcc8;
+
+  /* Brand greens */
+  --green-dark:  #1a4a1a;
+  --green-mid:   #246024;
+  --green-hi:    #2d8030;
+  --green-light: #edf7ed;
+  --green-tint:  #f4faf4;
+
+  /* Primary actions */
+  --accent:      #246024;
+  --accent-dark: #1a4a1a;
+
+  /* Text */
+  --text:        #1a2a1a;
+  --muted:       #4a6a4a;
+  --dim:         #8aaa8a;
+
+  /* Status */
+  --amber:       #d97706;
+  --amber-bg:    #fffbeb;
+  --amber-bdr:   #fcd34d;
+  --red:         #dc2626;
+
+  /* Typography */
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --mono: 'SF Mono', 'Fira Code', 'Courier New', Courier, monospace;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 14px rgba(0,0,0,0.08);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.app { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* ── Header — Forest Green Banner ─────────────────────────────── */
+
+.header {
+  background: linear-gradient(160deg, var(--green-dark) 0%, var(--green-hi) 100%);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  color: #a8e0a8;
+  text-transform: uppercase;
+}
+
+.header-goal {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #c0e8c0;
+}
+
+/* ── Tab Bar — White, sticky ──────────────────────────────────── */
+
+.tabs {
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  padding: 12px 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--dim);
+  border: none;
+  background: none;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+.tab:hover:not(.active) { color: var(--text); }
+
+/* ── Content Area ─────────────────────────────────────────────── */
+
+.content {
+  flex: 1;
+  padding: 20px 20px 56px;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── Cards ────────────────────────────────────────────────────── */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ── Section Labels ───────────────────────────────────────────── */
+
+.slabel {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 22px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border2);
+}
+
+/* ── Dashboard — Program Day ──────────────────────────────────── */
+
+.day-display {
+  text-align: center;
+  padding: 28px 20px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.day-num {
+  font-family: var(--mono);
+  font-size: 56px;
+  font-weight: bold;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.day-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.day-sub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+/* ── Goal Banner — keeps the dark green gradient ──────────────── */
+
+.goal-banner {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-hi) 100%);
+  border-radius: 10px;
+  padding: 18px 16px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 12px rgba(26, 74, 26, 0.18);
+}
+
+.goal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.goal-w {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.goal-w.t { color: #90ff90; }
+
+.goal-sub {
+  font-size: 10px;
+  color: #a8e0a8;
+  margin-top: 3px;
+  font-family: var(--mono);
+}
+
+.goal-arr { font-size: 22px; color: rgba(255,255,255,0.35); }
+
+.prog-wrap {
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  height: 5px;
+  overflow: hidden;
+}
+
+.prog-bar {
+  height: 100%;
+  background: #90ff90;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.prog-lbls {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #a8e0a8;
+  margin-top: 5px;
+  font-family: var(--mono);
+}
+
+/* ── Macro Grid ───────────────────────────────────────────────── */
+
+.macro-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.macro-cell {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 8px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.macro-val {
+  font-family: var(--mono);
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.macro-unit {
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 3px;
+}
+
+.macro-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  margin-top: 2px;
+  letter-spacing: 0.05em;
+}
+
+/* ── Today Badge ──────────────────────────────────────────────── */
+
+.today-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-light);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent-dark);
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+/* ── Meal Rows ────────────────────────────────────────────────── */
+
+.meal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.meal-row:last-child { border-bottom: none; }
+
+.meal-time {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  min-width: 74px;
+  padding-top: 2px;
+  flex-shrink: 0;
+}
+
+.meal-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.meal-p {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--accent);
+  text-align: right;
+}
+
+.meal-cal {
+  font-size: 10px;
+  color: var(--dim);
+  font-family: var(--mono);
+  text-align: right;
+}
+
+/* ── Settings / Form ──────────────────────────────────────────── */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-field label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.stat-field input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 13px;
+  padding: 8px 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.stat-field input:focus { border-color: var(--accent); }
+.stat-field.full { grid-column: 1 / -1; }
+
+/* ── Weight Log ───────────────────────────────────────────────── */
+
+.wlog-empty { font-size: 12px; color: var(--dim); }
+
+.wlog-row {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.wlog-row:last-child { border-bottom: none; }
+
+/* ── 5-Day Accordion ──────────────────────────────────────────── */
+
+.day-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.day-hdr {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  padding: 13px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.15s;
+}
+
+.day-hdr:hover { filter: brightness(1.08); }
+.day-hdr.open  { filter: brightness(0.92); }
+
+.day-title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.day-sum { display: flex; gap: 10px; align-items: center; }
+
+.day-p-badge {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  color: #90ff90;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.day-cal-txt {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.65);
+}
+
+.day-toggle { font-size: 11px; color: rgba(255,255,255,0.5); }
+
+.day-body {
+  display: none;
+  border-top: 1px solid var(--border);
+  background: var(--card);
+}
+
+.day-body.open { display: block; }
+
+.day-meal {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  gap: 10px;
+}
+
+.day-meal:last-child { border-bottom: none; }
+.dm-left { flex: 1; }
+
+.dm-time {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--dim);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.dm-name { font-size: 13px; font-weight: 600; color: var(--text); }
+
+.dm-mod {
+  font-size: 11px;
+  color: var(--amber);
+  margin-top: 3px;
+  line-height: 1.4;
+}
+
+.dm-right { text-align: right; flex-shrink: 0; }
+.dm-p { font-family: var(--mono); font-size: 14px; font-weight: bold; color: var(--accent); }
+.dm-cal { font-family: var(--mono); font-size: 9px; color: var(--dim); }
+
+/* ── Protein Booster Table ────────────────────────────────────── */
+
+.boost-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+
+.boost-tbl th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border2);
+}
+
+.boost-tbl td {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.boost-tbl tr:last-child td { border-bottom: none; }
+.pv { font-family: var(--mono); font-weight: bold; color: var(--accent); }
+.cv { font-family: var(--mono); color: var(--dim); text-align: right; }
+
+/* ── Food Grid ────────────────────────────────────────────────── */
+
+.food-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 4px; }
+
+.food-item {
+  background: var(--green-tint);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.food-icon { font-size: 16px; margin-bottom: 4px; }
+.food-name { font-size: 12px; font-weight: 700; color: var(--text); }
+.food-note { font-size: 10px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
+
+/* ── Info Boxes ───────────────────────────────────────────────── */
+
+.info-box {
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.info-box.amber {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-bdr);
+  border-left: 3px solid var(--amber);
+  color: #92400e;
+}
+
+.info-box.green {
+  background: var(--green-light);
+  border: 1px solid var(--border2);
+  color: var(--muted);
+}
+
+.info-box strong { color: var(--text); }
+
+/* ── Rule Items ───────────────────────────────────────────────── */
+
+.rule-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+}
+
+.rule-icon { font-size: 18px; flex-shrink: 0; }
+.rule-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.rule-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+/* ── CLAUDE.md Editor ─────────────────────────────────────────── */
+
+.quick-stats {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+
+.quick-stats-title {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.apply-btn { margin-top: 12px; width: 100%; }
+
+.editor-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--card);
+  color: var(--text);
+}
+
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.btn.primary {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+}
+
+.btn.primary:hover { background: var(--green-hi); border-color: var(--green-hi); }
+
+.btn.danger { color: var(--red); }
+.btn.danger:hover { border-color: var(--red); }
+
+.save-status { font-family: var(--mono); font-size: 10px; color: var(--dim); margin-left: auto; }
+.save-status.saved { color: var(--accent); }
+
+.editor-area {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.8;
+  padding: 16px;
+  width: 100%;
+  min-height: 580px;
+  resize: vertical;
+  outline: none;
+  tab-size: 2;
+}
+
+.editor-area:focus { border-color: var(--accent); }
+
+/* ── Recipes Panel ────────────────────────────────────────────── */
+
+.recipe-filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.recipe-filter-btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border2);
+  cursor: pointer;
+  background: var(--card);
+  color: var(--muted);
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+
+.recipe-filter-btn.active,
+.recipe-filter-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+.recipe-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.recipe-hdr {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green-mid) 100%);
+  padding: 13px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: filter 0.15s;
+}
+
+.recipe-hdr.lunch  { background: linear-gradient(135deg, #1b4d2a 0%, #27683c 100%); }
+.recipe-hdr.dinner { background: linear-gradient(135deg, #1a2840 0%, #243558 100%); }
+.recipe-hdr.snack  { background: linear-gradient(135deg, #4a2e0a 0%, #7a4d1a 100%); }
+.recipe-hdr:hover  { filter: brightness(1.1); }
+.recipe-hdr.open   { filter: brightness(0.9); }
+
+.recipe-hdr-left { flex: 1; min-width: 0; }
+
+.recipe-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.recipe-days-inline {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.04em;
+}
+
+.recipe-hdr-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.recipe-type-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: bold;
+  color: #90ff90;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.recipe-hdr.lunch  .recipe-type-badge { color: #aaffcc; }
+.recipe-hdr.dinner .recipe-type-badge { color: #aac8ff; }
+.recipe-hdr.snack  .recipe-type-badge { color: #ffd9a0; }
+
+.recipe-macros {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: rgba(255,255,255,0.55);
+}
+
+.recipe-macros strong { color: #90ff90; font-size: 12px; }
+.recipe-hdr.lunch  .recipe-macros strong { color: #aaffcc; }
+.recipe-hdr.dinner .recipe-macros strong { color: #aac8ff; }
+.recipe-hdr.snack  .recipe-macros strong { color: #ffd9a0; }
+
+.recipe-toggle { font-size: 11px; color: rgba(255,255,255,0.4); flex-shrink: 0; }
+
+.recipe-body {
+  display: none;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 16px;
+}
+
+.recipe-body.open { display: block; }
+
+.recipe-used-badge {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  background: var(--green-light);
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  padding: 4px 10px;
+  margin-bottom: 14px;
+}
+
+.recipe-section-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 14px 0 8px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 5px;
+}
+
+.recipe-section-label:first-child { margin-top: 0; }
+
+.recipe-ingr { list-style: none; margin: 0; padding: 0; }
+
+.recipe-ingr li {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.recipe-ingr li:last-child { border-bottom: none; }
+
+.recipe-ingr li::before {
+  content: '·';
+  color: var(--accent);
+  font-weight: bold;
+  font-size: 18px;
+  flex-shrink: 0;
+  line-height: 1.1;
+}
+
+.recipe-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: step-counter;
+}
+
+.recipe-steps li {
+  display: flex;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  counter-increment: step-counter;
+}
+
+.recipe-steps li:last-child { border-bottom: none; }
+
+.recipe-steps li::before {
+  content: counter(step-counter);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: bold;
+  color: #fff;
+  background: var(--accent);
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.recipe-note {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-bdr);
+  border-left: 3px solid var(--amber);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 11px;
+  color: #92400e;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+/* ── Responsive ───────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .macro-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats-grid { grid-template-columns: 1fr; }
+  .stat-field.full { grid-column: 1; }
+  .food-grid { grid-template-columns: 1fr; }
+  .content { padding: 14px 14px 56px; }
+}

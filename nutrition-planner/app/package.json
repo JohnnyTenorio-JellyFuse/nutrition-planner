@@ -1,0 +1,12 @@
+{
+  "name": "nutrition-plan",
+  "version": "1.0.0",
+  "description": "60-Day Cut Nutrition Plan — local web app",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
