@@ -16,7 +16,7 @@ Built as a personal tool for following a structured nutrition plan (calorie/macr
 
 ```
 nutrition-planner/
-├── app/                  — the deployed local web app
+├── app/                  
 │   ├── index.html
 │   ├── style.css
 │   ├── app.js
@@ -34,14 +34,7 @@ nutrition-planner/
 
 ## Running the App
 
-```bash
-cd app
-node server.js
-```
-
-Then open **http://localhost:3000**.
-
-No `npm install` needed — `server.js` is a zero-dependency static server using only Node.js built-ins.
+Live demo: https://nutrition-planner-eight.vercel.app/
 
 ---
 
